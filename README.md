@@ -1,6 +1,6 @@
 # Docker ctf
 
-Set of scripts to create a docker image from ubuntu 16 with support to 32bit
+Set of scripts to create a docker image from ubuntu with support to 32bit
 executables (a few 32bit libraries pre-installed) and active ssh server.
 It is designed to be used when playing pwn challenges to streamline the process
 of developing the exploit script (pwntools) while testing on a local machine
