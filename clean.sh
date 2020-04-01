@@ -1,6 +1,7 @@
 #!/bin/bash
 
-docker stop binarypwn
-docker rm binarypwn
-# decommen to remove image
-# docker image rm ub_binaries
+name=$(cat image-name)
+docker stop $name
+docker rm $name
+# decomment to remove image
+# docker image rm $name

@@ -6,6 +6,4 @@ if [ -z "$1" ]
     exit 1
 fi
 
-binary_file=$1
-
-docker build --build-arg binary=$binary_file -t ub_binaries .
+docker build --build-arg binary=$1 -t $(cat image-tag) .
