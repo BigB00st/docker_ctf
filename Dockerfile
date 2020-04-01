@@ -36,10 +36,11 @@ WORKDIR /home/guest
 ARG binary
 
 ADD $binary .
-RUN chmod +x $binary && \
-chown root:root $binary && \
+
+COPY flag .
+
+RUN chown root:root $binary && \
 chmod 4755 $binary && \
-echo FLAG{General_Kenobi} > flag && \
 chown root:root flag && \
 chmod 600 flag
 
