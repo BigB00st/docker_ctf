@@ -6,4 +6,4 @@ if [ -z "$1" ]
     exit 1
 fi
 
-docker build --build-arg binary=$1 -t $(cat image-tag) .
+docker build --build-arg binary=$1 --build-arg user=$(cat ctf/user) -t $(cat ctf/image-tag) .

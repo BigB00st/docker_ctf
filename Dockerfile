@@ -23,26 +23,33 @@ libseccomp2:i386
 RUN mkdir /root/.ssh && \
 mkdir /var/run/sshd
 
-RUN echo 'root:password' | chpasswd && \
-useradd -ms /bin/bash guest && \
-echo 'guest:guest' | chpasswd
-
 RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
 
-WORKDIR /home/guest
+RUN sysctl -w kernel.dmesg_restrict=1
 
-# Variable to be specified at build time
+ARG user
+ENV user=${user}
+
+RUN useradd -ms /bin/bash "${user}" && \
+echo "${user}:guest" | chpasswd && \
+useradd -ms /bin/bash "${user}_pwn" && \
+echo "${user}_pwn:password" | chpasswd && \
+echo 'root:password' | chpasswd
+
+WORKDIR "/home/${user}"
+
 ARG binary
-
 ADD $binary .
 
-COPY flag .
+COPY ctf/flag .
 
-RUN chown root:root $binary && \
-chmod 4755 $binary && \
-chown root:root flag && \
-chmod 600 flag
+RUN binary=$(basename $binary) && \
+chown -R root:root "/home/${user}" && \
+chown "${user}_pwn:${user}" "${binary}" && \
+chmod 4550 "${binary}" && \
+chown "${user}_pwn:root" flag && \
+chmod 440 flag
 
 # Open port 22
 EXPOSE 22

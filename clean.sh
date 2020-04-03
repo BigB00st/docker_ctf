@@ -1,6 +1,6 @@
 #!/bin/bash
 
-name=$(cat image-name)
+name=$(cat ctf/image-name)
 docker stop $name
 docker rm $name
 # decomment to remove image
