@@ -9,14 +9,15 @@ even when the host runs osx/win.
 A couple of common tools gcc/vim/gdb/radare2 are already automatically
 installed.
 
-## usage
+## Usage
+Set `image-name`, `image-tag`, `user`, `flag` in the  `ctf/` directory.
 
 Run `./build $binary_to_send_to_conatiner` to create the docker image.
 This will take a couple of minutes.
 
 `./start.sh` spawns the containers and maps port 22 to port 2222 on the host.
 
-`ssh root@localhost -p 2222` or the ssh module form `pwntools` to ssh into the
+`ssh user@localhost -p 2222` or the ssh module form `pwntools` to ssh into the
 container.
 
 `./clean.sh` to stop and remove the container. If uncommented the last line will
